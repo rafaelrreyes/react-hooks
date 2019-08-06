@@ -6,13 +6,13 @@ import "./Character.scss";
 const Character = ({ name, age, superpower }) => {
 	return (
 		<div className="character">
-			<Button
+			{/* <Button
 				buttonSize={BUTTON_SIZES.LARGE}
 				onClickCallback={(e) => {
 					console.log("clicked button");
 				}}
-			/>
-			<Label>{name}</Label>
+			/> */}
+			{/* <Label>{name}</Label> */}
 		</div>
 	);
 };

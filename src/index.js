@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import Character from "./js/components/Character/Character";
+import MainView from "APP_COMPONENTS/MainView/MainView";
 
 const App = () => {
 	return (
 		<div>
-			<Character />
+			<MainView />
 		</div>
 	);
 };
