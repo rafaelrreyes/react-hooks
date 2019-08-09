@@ -4,11 +4,16 @@ import CharacterPicker from "APP_COMPONENTS/CharacterPicker/CharacterPicker";
 
 // core components
 import { Button, BUTTON_SIZES } from "CORE/Button/Button";
+import FilterDropdown from "CORE/FilterDropdown/FilterDropdown";
 
 const MainView = (props) => {
 	const [selectedChar, setSelectedChar] = useState(1);
 	const [side, setSide] = useState(`light`);
 	const [destroyed, setDestroyed] = useState(false);
+	const [activeFilters, setActiveFilters] = useState(new Set().add("WO"));
+
+	//this needs to get hooked into redux
+	const testFilters = ["WO", "CO", "S-1", "S-2"];
 
 	const [state, setState] = useState({
 		selectedChar: "1",
@@ -54,6 +59,22 @@ const MainView = (props) => {
 			>
 				Dark
 			</Button>
+
+			<FilterDropdown
+				allFilters={testFilters}
+				activeFilters={activeFilters}
+				handleCheckboxChange={(filter) => {
+					let copyActiveFilters = activeFilters;
+					if (copyActiveFilters.has(filter)) {
+						copyActiveFilters.delete(filter);
+					} else {
+						copyActiveFilters.add(filter);
+					}
+
+					setActiveFilters(copyActiveFilters);
+					console.log(copyActiveFilters);
+				}}
+			/>
 		</div>
 	);
 };
