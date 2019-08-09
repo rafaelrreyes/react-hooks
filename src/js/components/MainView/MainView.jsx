@@ -4,7 +4,7 @@ import CharacterPicker from "APP_COMPONENTS/CharacterPicker/CharacterPicker";
 
 // core components
 import { Button, BUTTON_SIZES } from "CORE/Button/Button";
-import FilterDropdown from "CORE/FilterDropdown/FilterDropdown";
+import { FilterDropdown, DROPDOWN_CONSTANTS } from "CORE/FilterDropdown/FilterDropdown";
 
 const MainView = (props) => {
 	const [selectedChar, setSelectedChar] = useState(1);
@@ -13,7 +13,7 @@ const MainView = (props) => {
 	const [activeFilters, setActiveFilters] = useState(new Set().add("WO"));
 
 	//this needs to get hooked into redux
-	const testFilters = ["WO", "CO", "S-1", "S-2"];
+	const testFilters = ["WO", "CO", "S-1", "S-2", "FSCC", "S-4", "S-6", "AirO", "LOC", "BAS", "PAO"]; // this will be a getAllRolesFilter from reducer
 
 	const [state, setState] = useState({
 		selectedChar: "1",
@@ -23,7 +23,8 @@ const MainView = (props) => {
 
 	useEffect(() => {
 		console.log(state);
-	}, [state]);
+		console.log(activeFilters);
+	}, [state, activeFilters]);
 
 	const sideHandler = (side) => {
 		setState({ ...state, side });
@@ -63,18 +64,12 @@ const MainView = (props) => {
 			<FilterDropdown
 				allFilters={testFilters}
 				activeFilters={activeFilters}
-				handleCheckboxChange={(filter) => {
-					let copyActiveFilters = activeFilters;
-					if (copyActiveFilters.has(filter)) {
-						copyActiveFilters.delete(filter);
-					} else {
-						copyActiveFilters.add(filter);
-					}
-
-					setActiveFilters(copyActiveFilters);
-					console.log(copyActiveFilters);
+				handleCheckboxChange={(newFilters) => {
+					// reducer setter
+					setActiveFilters(newFilters);
 				}}
 			/>
+			<p>this is a paragraph rendering under the filter dropdown</p>
 		</div>
 	);
 };

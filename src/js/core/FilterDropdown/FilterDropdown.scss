@@ -1,6 +1,39 @@
 .filter-dropdown {
+	background-color: gainsboro;
+	position: relative;
+	/* cursor: pointer; */
+	width: fit-content;
+	/* padding: 0.5em; */
+
+	.filter-dropdown-default {
+		color: white;
+		font-weight: 800;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		cursor: pointer;
+		position: relative;
+		user-select: none;
+		display: block;
+		padding: 10px;
+	}
+
 	.filter-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		left: 0;
+		background-color: gainsboro;
+		width: max-content;
+
 		.filter-item {
+			color: #fff;
+			color: #fff;
+			/* margin: .5em; */
+			height: 30px;
+			padding: 0 10px;
+			width: 90%;
 		}
 	}
 }
