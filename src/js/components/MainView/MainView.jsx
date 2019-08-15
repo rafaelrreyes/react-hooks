@@ -7,42 +7,35 @@ import { Button, BUTTON_SIZES } from "CORE/Button/Button";
 import { FilterDropdown, DROPDOWN_CONSTANTS } from "CORE/FilterDropdown/FilterDropdown";
 
 const MainView = (props) => {
-	const [selectedChar, setSelectedChar] = useState(1);
+	const [selectedCharId, setSelectedCharId] = useState(1);
 	const [side, setSide] = useState(`light`);
 	const [destroyed, setDestroyed] = useState(false);
-	const [activeFilters, setActiveFilters] = useState(new Set().add("WO"));
+	// const [activeFilters, setActiveFilters] = useState(new Set().add("WO"));
 
 	//this needs to get hooked into redux
-	const testFilters = ["WO", "CO", "S-1", "S-2", "FSCC", "S-4", "S-6", "AirO", "LOC", "BAS", "PAO"]; // this will be a getAllRolesFilter from reducer
+	// const testFilters = ["WO", "CO", "S-1", "S-2", "FSCC", "S-4", "S-6", "AirO", "LOC", "BAS", "PAO"]; // this will be a getAllRolesFilter from reducer
 
-	const [state, setState] = useState({
-		selectedChar: "1",
-		side: "light",
-		destroyed: false
-	});
-
-	useEffect(() => {
-		console.log(state);
-		console.log(activeFilters);
-	}, [state, activeFilters]);
+	const SITH_LORDS = [{ name: "Darth Vader", id: "4" }];
 
 	const sideHandler = (side) => {
-		setState({ ...state, side });
+		setSide(side);
+		// if side is set to dark AND if selectedChar is a sith lord, set destroyed to true
+		if (side === "dark" && SITH_LORDS.find((character) => selectedCharId === character.id)) {
+			setDestroyed(true);
+		} else {
+			setDestroyed(false);
+		}
 	};
 
 	const charSelectHandler = (event) => {
-		const charId = event.target.value;
-		setState({ ...state, selectedChar: charId });
-	};
-
-	const destroyHandler = () => {
-		setState({ ...state, destroyed: true });
+		const selectedCharId = event.target.value;
+		setSelectedCharId(selectedCharId);
 	};
 
 	return (
 		<div className="main-view">
-			<CharacterPicker {...state} onCharSelect={charSelectHandler} />
-			<Character />
+			<CharacterPicker onCharSelect={charSelectHandler} />
+			<Character characterId={selectedCharId} />
 
 			<Button
 				buttonSize={BUTTON_SIZES.LARGE}
@@ -61,15 +54,16 @@ const MainView = (props) => {
 				Dark
 			</Button>
 
-			<FilterDropdown
+			{destroyed && <span className="destroyed-label">YOU ARE DESTROYED BY THE SITH</span>}
+			{/* <FilterDropdown
 				allFilters={testFilters}
 				activeFilters={activeFilters}
 				handleCheckboxChange={(newFilters) => {
 					// reducer setter
 					setActiveFilters(newFilters);
 				}}
-			/>
-			<p>this is a paragraph rendering under the filter dropdown</p>
+			/> */}
+			{/* <p>this is a paragraph rendering under the filter dropdown</p> */}
 		</div>
 	);
 };

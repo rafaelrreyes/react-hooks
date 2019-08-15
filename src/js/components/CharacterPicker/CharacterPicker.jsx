@@ -1,41 +1,48 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const CharacterPicker = (props) => {
-	useEffect(() => {});
-	const characters = [
-		{
-			name: "Luke Skywalker"
-		},
-		{
-			name: "Darth Vader"
-		},
-		{
-			name: "R2D2"
-		},
-		{
-			name: "C3PO"
-		},
-		{
-			name: "Chewbacca"
-		},
-		{
-			name: "Han Solo"
-		},
-		{
-			name: "Yoda"
+	const [loadedCharacters, setLoadedCharacters] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		setIsLoading(true);
+		axios
+			.get("https://swapi.co/api/people")
+			.then((response) => {
+				if (response.status === 200) {
+					const { results } = response.data;
+					setIsLoading(false);
+					setLoadedCharacters(
+						results.map((character, index) => {
+							return {
+								name: character.name,
+								id: index + 1
+							};
+						})
+					);
+				}
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
+
+	const renderCharacterOptions = () => {
+		if (isLoading) {
+			return <option>Loading characters...</option>;
 		}
-	];
-	return <select onChange={props.onCharSelect}>{renderCharacterOptions(characters)}</select>;
+
+		return loadedCharacters.map((character, index) => {
+			return (
+				<option key={character + index} value={character.id}>
+					{character.name}
+				</option>
+			);
+		});
+	};
+
+	return <select onChange={props.onCharSelect}>{renderCharacterOptions()}</select>;
 };
 
 export default CharacterPicker;
-
-const renderCharacterOptions = (characters) => {
-	return characters.map((character, index) => {
-		return (
-			<option key={character + index} value={character.name}>
-				{character.name}
-			</option>
-		);
-	});
-};
