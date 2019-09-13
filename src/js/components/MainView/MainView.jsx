@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Character from "APP_COMPONENTS/Character/Character";
 import CharacterPicker from "APP_COMPONENTS/CharacterPicker/CharacterPicker";
+import Notifications from "APP_COMPONENTS/Notifications/Notifications";
+import ReduxHooksView from "APP_COMPONENTS/ReduxHooksView/ReduxHooksView";
+import LoginView from "APP_COMPONENTS/LoginView/LoginView";
 
 // core components
 import { Button, BUTTON_SIZES } from "CORE/Button/Button";
@@ -15,7 +18,7 @@ const MainView = (props) => {
 	//this needs to get hooked into redux
 	// const testFilters = ["WO", "CO", "S-1", "S-2", "FSCC", "S-4", "S-6", "AirO", "LOC", "BAS", "PAO"]; // this will be a getAllRolesFilter from reducer
 
-	const SITH_LORDS = [{ name: "Darth Vader", id: "4" }];
+	const SITH_LORDS = [{ name: "Darth Vader", id: 4 }];
 
 	const sideHandler = (side) => {
 		setSide(side);
@@ -28,7 +31,7 @@ const MainView = (props) => {
 	};
 
 	const charSelectHandler = (event) => {
-		const selectedCharId = event.target.value;
+		const selectedCharId = parseInt(event.target.value);
 		setSelectedCharId(selectedCharId);
 	};
 
@@ -64,6 +67,10 @@ const MainView = (props) => {
 				}}
 			/> */}
 			{/* <p>this is a paragraph rendering under the filter dropdown</p> */}
+			<Notifications />
+
+			<ReduxHooksView />
+			<LoginView />
 		</div>
 	);
 };

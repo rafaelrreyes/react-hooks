@@ -2,6 +2,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 
+console.log(__dirname);
 module.exports = {
 	entry: "./src/index.js",
 	output: {
@@ -28,7 +29,8 @@ module.exports = {
 			CORE: path.resolve(__dirname, "./src/js/core/"),
 			APP_COMPONENTS: path.resolve(__dirname, "./src/js/components/"),
 			UTILS: path.resolve(__dirname, "./src/js/utilities/"),
-			REDUX: path.resolve(__dirname, "./src/js/redux/")
+			REDUX: path.resolve(__dirname, "./src/js/redux/"),
+			HOOKS: path.resolve(__dirname, "./src/js/hooks/")
 		},
 		extensions: [".js", ".jsx", "*"]
 	},

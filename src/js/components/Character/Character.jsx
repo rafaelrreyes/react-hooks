@@ -8,13 +8,16 @@ const Character = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		setIsLoading(true);
-		axios.get(`https://swapi.co/api/people/${props.characterId}`).then((response) => {
-			setIsLoading(false);
-			const characterData = response.data;
-			setLoadedCharacter(characterData);
-		});
+		fetchCharacterData();
 	}, [props.characterId]);
+
+	const fetchCharacterData = async () => {
+		setIsLoading(true);
+		const result = await axios.get(`https://swapi.co/api/people/${props.characterId}`);
+		console.log(result);
+		setIsLoading(false);
+		setLoadedCharacter(result.data);
+	};
 
 	if (isLoading) {
 		return <div>Loading Character Data...</div>;
